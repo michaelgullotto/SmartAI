@@ -5,8 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Start()
+    {
+        Screen.SetResolution(1980, 1080, true, 60);
+    }
     public void Playgame()
     {
+        
         // load scene from main menu
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
