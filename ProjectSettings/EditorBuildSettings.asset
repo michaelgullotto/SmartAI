@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/menu.unity
     guid: 684b9c35d34788744b4c6c7a4e174ce6
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/SmartAI.unity
+    guid: 2397d140d4b7dab4f93ef34c85820186
   m_configObjects: {}

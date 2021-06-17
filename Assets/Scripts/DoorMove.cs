@@ -18,6 +18,7 @@ public class DoorMove : MonoBehaviour
     Vector3 closed2;
     private void Start()
     {
+        // sets postions doors can be in
         open = door.transform.position + Vector3.up * 20;
         closed = door.transform.position;
         open1 = door1.transform.position + Vector3.up * 20;
@@ -30,6 +31,7 @@ public class DoorMove : MonoBehaviour
 
     void Update()
     {
+        //opens each of doors when switch is triggered
         if (doorswitch == true)
         {
             door.transform.position = Vector3.Lerp(closed, open, 3);

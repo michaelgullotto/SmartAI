@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class StaatesMachines : MonoBehaviour
 {
+    // the states
     public enum States
     {
         Coins,
@@ -17,8 +18,7 @@ public class StaatesMachines : MonoBehaviour
 
     private Dictionary<States, StateDelegate> states = new Dictionary<States, StateDelegate>();
     [SerializeField] private States currentState = States.Coins;
-    //[SerializeField] private Transform controlled = null;
-    //[SerializeField] private float speed = 10f;
+   
     [SerializeField] private NavMeshAgent agent;
     int coinCount;
     private bool allCoins = false;
@@ -34,7 +34,7 @@ public class StaatesMachines : MonoBehaviour
     float clostestDistance = float.MaxValue;
     private bool coincollected = false;
     private bool switchcollected = false;
-
+    // makes sure has a state
     public void ChangeState(States _newState)
     {
         if (currentState != _newState)
@@ -47,8 +47,9 @@ public class StaatesMachines : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // makes reso set
         Screen.SetResolution(1980, 1080, true, 60);
-        // controlled ??= transform;
+       // adds states to stae machine on start
         states.Add(States.Coins, Coins);
         states.Add(States.Switchs, Switchs);
         states.Add(States.Goal, Goal);
@@ -57,6 +58,7 @@ public class StaatesMachines : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // checks if player has all the coins and switchs
         if (coinCount >= 3)
         {
             allCoins = true;
@@ -66,12 +68,13 @@ public class StaatesMachines : MonoBehaviour
             allSwitchs = true;
         }
 
-
+        // checks player has a state for debugging
         if (states.TryGetValue(currentState, out StateDelegate state))
             state.Invoke();
         else
             Debug.LogError($"No state function set for state{currentState}");
     }
+    //state for lookingg for coins
     private void Coins()
     {
         if(coincollected == false)
@@ -100,11 +103,9 @@ public class StaatesMachines : MonoBehaviour
                 ChangeState(States.Goal);
             }
         }
-        //else if(agent.pathStatus == NavMeshPathStatus.PathPartial)
-        //{
-        //    ChangeState(States.Switchs);
-        //}
+       
     }
+    // state for looking for switchs
     private void Switchs()
     {
         if(switchcollected == false)
@@ -135,7 +136,7 @@ public class StaatesMachines : MonoBehaviour
             }
         }
     }
-
+    // state for procedd to end goal
     private void Goal()
     {
         agent.SetDestination(endgoal.transform.position);
@@ -144,7 +145,7 @@ public class StaatesMachines : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Coin component
+        // Coins and switchs are destroyed when collected and count fo total collected is increased
         if (coins.Contains(collision.gameObject))
         {
             coins.Remove(collision.gameObject);
